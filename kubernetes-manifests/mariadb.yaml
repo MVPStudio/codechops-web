@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: codechops-mdb
+  namespace: codechops
+  labels:
+    app: codechops-mdb
+spec:
+  ports:
+    - port: 3306
+      name: mariadb
+  selector:
+    app: codechops-mdb
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: codechops-mdb
+  namespace: codechops
+spec:
+  serviceName: codechops-mdb
+  selector:
+    matchLabels:
+      app: codechops-mdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: codechops-mdb
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb:10.5.6
+          resources:
+            limits:
+              cpu: 0.5
+              memory: 500Mi
+            requests:
+              cpu: 0.5
+              memory: 500Mi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mdbsecrets
+                  key: password
+            - name: MYSQL_DATABASE
+              value: wordpress
+            - name: MYSQL_USER
+              value: wordpress
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mdbsecrets
+                  key: user-password
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mariadb-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 20Gi
