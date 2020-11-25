@@ -31,15 +31,15 @@ spec:
         app: codechops-wp
     spec:
       containers:
-      - image: wordpress:5.5-apache
+      - image: mvpstudio/codechops-wordpress:v003
         name: wordpress
         resources:
           limits:
             cpu: 1
-            memory: 8Gi
+            memory: 2Gi
           requests:
             cpu: 1
-            memory: 8Gi
+            memory: 2Gi
         env:
         - name: WORDPRESS_DB_HOST
           value: codechops-mdb.codechops:3306
