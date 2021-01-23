@@ -1,3 +1,3 @@
-FROM wordpress:5.5-apache
+FROM wordpress:5.6-apache
 
 COPY php.ini /usr/local/etc/php/php.ini
