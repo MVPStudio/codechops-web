@@ -5,6 +5,11 @@ Run WordPress on Kubernetes running MariaDB on a Persistant Volume
 - Docker
 - Kubernetes cluster on MVP Studio. More information (here)[https://github.com/MVPStudio/k8].
 
+## Docker Commands
+- docker build -t mvpstudio/codechops-wordpress:v005 .
+- docker push mvpstudio/codechops-wordpress:v005 
+
+
 ## kubectl Commands
 
 - deploy with

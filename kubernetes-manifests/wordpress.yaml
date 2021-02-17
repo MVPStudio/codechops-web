@@ -31,7 +31,7 @@ spec:
         app: codechops-wp
     spec:
       containers:
-      - image: mvpstudio/codechops-wordpress:v004
+      - image: mvpstudio/codechops-wordpress:v005
         name: wordpress
         resources:
           limits:
